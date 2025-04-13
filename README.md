@@ -13,6 +13,6 @@ Mesh loading (.obj support)
 Texture mapping
 Transformations (scale, rotate, translate)
 Keyboard/mouse controls for scene navigation
-🛠️ Tech Stack
 
-Language: HTML
+🛠️ Tech Stack
+Language: HTML, CSS, JS
