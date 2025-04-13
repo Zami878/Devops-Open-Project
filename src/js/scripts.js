@@ -154,3 +154,14 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
+
+// Camera controls
+viewAngleSlider.addEventListener("input", (e) => {
+    viewAngle = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+pitchAngleSlider.addEventListener("input", (e) => {
+    pitchAngle = parseFloat(e.target.value);
+    updateDisplays();
+}); 
