@@ -1,25 +1,42 @@
-# 3D Software Renderer
+3D Software Renderer
 
-A lightweight, JavaScript-based 3D software renderer capable of rendering any 3D model with interactive controls. This project implements a full rendering pipeline, including transformations, projection, and triangle rasterization, all within a browser environment.
+A lightweight, JavaScript-based 3D software renderer capable of rendering any 3D model with interactive controls. This project showcases the implementation of a complete rendering pipeline, including transformations, perspective projection, and triangle rasterization, all within a browser environment using HTML5 Canvas.
 
-## Overview
 
-This renderer supports loading and displaying 3D models defined by vertices, indices, and colors. It features a customizable camera system, rotation controls, and a scalable architecture, making it suitable for educational purposes, prototyping, or as a foundation for more complex graphics applications.
+Overview
 
-- **Language**: JavaScript
-- **Environment**: Browser (HTML5 Canvas)
-- **License**: MIT
+The 3D software renderer enables loading and displaying 3D models defined by vertices, indices, and colors. It includes:
+- A customizable camera system.
+- Interactive rotation controls.
+- Scalable architecture suitable for:
+  - Educational purposes.
+  - Rapid prototyping.
+  - Building a foundation for advanced graphics applications.
 
-## Features
 
-- **Versatile 3D Rendering**: Renders any 3D model using a software-based pipeline (no WebGL).
-- **Interactive Controls**: Adjust rotation speed and view angle with sliders.
-- **Transformation Support**: Includes translation, rotation (X, Y, Z), scaling, and perspective projection.
-- **Color Interpolation**: Smooth shading across triangle surfaces.
-- **Real-Time Animation**: Continuous rendering with `requestAnimationFrame`.
-- **Reset Functionality**: Returns to initial state with a button click.
+Technical Details
+- Language: JavaScript.
+- Environment: Browser (HTML5 Canvas).
+  
 
-## Setup
 
-### Prerequisites
-- Git 
+Key Features
+1. Versatile 3D Rendering:  
+   Renders 3D models using a software-based pipeline without relying on WebGL.
+2. Interactive Controls:
+   Adjust rotation speed and view angles seamlessly using slider inputs.
+3. Transformation Support: 
+   Implements essential transformations like translation, rotation (X, Y, Z), scaling, and perspective projection.
+4. Color Interpolation: 
+   Provides smooth shading across triangle surfaces for visual clarity.
+5. Real-Time Animation:  
+   Continuous rendering enabled via `requestAnimationFrame` for fluid animations.
+6. Reset Functionality:
+   Allows users to return to the initial state with a simple button click.
+
+
+Setup
+
+Prerequisites:
+- Git: Ensure Git is installed for version control and managing repositories.
+- Modern Browser: Use browsers like Chrome, Firefox, or Edge for running the HTML5 Canvas environment.
