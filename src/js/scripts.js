@@ -76,3 +76,16 @@ const defaultColors = [
     [0, 0, 255, 255],   
     [255, 255, 0, 255], 
     [0, 255, 255, 255]  
+];
+
+
+// Current shape data
+let vertices = defaultVertices.map(v => [...v]);
+let indices = defaultIndices.map(i => [...i]);
+let colors = defaultColors.map(c => [...c]);
+
+// Setup canvas
+const canvasWidth = canvas.width;
+const canvasHeight = canvas.height;
+const framebuffer = ctx.createImageData(canvasWidth, canvasHeight);
+
