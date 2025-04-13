@@ -1,0 +1,66 @@
+/* Reset some defaults */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden;
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Deep bluish-black gradient */
+}
+
+/* Welcome Screen */
+.welcome-screen {
+    text-align: center;
+    color: white;
+    padding: 2rem;
+    background: linear-gradient(to bottom right, rgba(33, 44, 62, 0.7), rgba(18, 32, 47, 0.6));
+    backdrop-filter: blur(15px);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-screen h1 {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.6);
+    color: #dbe9f4;
+}
+
+.welcome-screen p {
+    font-size: 1.2em;
+    margin-bottom: 1.5em;
+    color: #b0c7d9;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+}
+
+#start-engine-btn {
+    padding: 12px 25px;
+    font-size: 1.3em;
+    background: rgba(255, 255, 255, 0.1);
+    color: #dbe9f4;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 12px rgba(0, 132, 255, 0.4);
+}
+
+#start-engine-btn:hover {
+    background: rgba(0, 132, 255, 0.2);
+    transform: scale(1.05);
+}
+
+#start-engine-btn:active {
+    transform: scale(0.98);
+}
