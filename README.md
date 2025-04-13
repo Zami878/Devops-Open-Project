@@ -15,4 +15,4 @@ Transformations (scale, rotate, translate)
 Keyboard/mouse controls for scene navigation
 🛠️ Tech Stack
 
-Language: C++ / JavaScript / Python (use your project language)
+Language: HTML
