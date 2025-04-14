@@ -154,3 +154,17 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
+scaleXSlider.addEventListener("input", (e) => {
+    scaleX = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+scaleYSlider.addEventListener("input", (e) => {
+    scaleY = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+scaleZSlider.addEventListener("input", (e) => {
+    scaleZ = parseFloat(e.target.value);
+    updateDisplays();
+});
