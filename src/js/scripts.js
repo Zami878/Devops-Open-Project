@@ -276,3 +276,9 @@ speedSlider.addEventListener("input", (e) => {
     speed = parseFloat(e.target.value);
     updateDisplays();
 });
+function fillTextAreas() {
+    vertexInput.value = vertices.map(v => [${v.join(', ')}]).join('\n');
+    indexInput.value = indices.map(i => [${i.join(', ')}]).join('\n');
+    colorInput.value = colors.map(c => [${c.join(', ')}]).join('\n');
+}
+
