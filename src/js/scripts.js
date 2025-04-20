@@ -154,6 +154,80 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
+<<<<<<< HEAD
+
+
+
+function parseVertices(text) {
+    const lines = text.trim().split('\n');
+    const result = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+
+        const parts = line.replace(/[\[\]\s]/g, '').split(',');
+        if (parts.length !== 3) {
+            throw new Error(`Line ${i+1}: Need exactly 3 numbers for a vertex`);
+        }
+
+        const nums = parts.map(part => parseFloat(part));
+        if (nums.some(isNaN)) {
+            throw new Error(`Line ${i+1}: Invalid number`);
+        }
+
+        result.push(nums);
+    }
+    return result;
+}
+
+function parseIndices(text) {
+    const lines = text.trim().split('\n');
+    const result = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+
+        const parts = line.replace(/[\[\]\s]/g, '').split(',');
+        if (parts.length !== 3) {
+            throw new Error(`Line ${i+1}: Need exactly 3 indices per face`);
+        }
+
+        const nums = parts.map(part => Math.round(parseFloat(part)));
+        if (nums.some(isNaN)) {
+            throw new Error(`Line ${i+1}: Invalid index`);
+        }
+
+        result.push(nums);
+    }
+    return result;
+}
+
+function parseColors(text) {
+    const lines = text.trim().split('\n');
+    const result = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+
+        const parts = line.replace(/[\[\]\s]/g, '').split(',');
+        if (parts.length < 3 || parts.length > 4) {
+            throw new Error(`Line ${i+1}: Need 3 or 4 color values (RGB or RGBA)`);
+        }
+
+        const nums = parts.map(part => {
+            const num = parseInt(part);
+            return Math.max(0, Math.min(255, num));
+        });
+
+        if (nums.length === 3) nums.push(255); 
+        result.push(nums);
+    }
+    return result;
+}
+=======
 scaleXSlider.addEventListener("input", (e) => {
     scaleX = parseFloat(e.target.value);
     updateDisplays();
@@ -168,3 +242,4 @@ scaleZSlider.addEventListener("input", (e) => {
     scaleZ = parseFloat(e.target.value);
     updateDisplays();
 });
+>>>>>>> 659f2fc2fe6013cf5b68673066e42c8e5bc3f6b2
