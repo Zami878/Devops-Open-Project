@@ -257,3 +257,22 @@ scaleZSlider.addEventListener("input", (e) => {
     updateDisplays();
 });
 >>>>>>> 659f2fc2fe6013cf5b68673066e42c8e5bc3f6b2
+// Start button
+startEngineBtn.addEventListener("click", () => {
+    welcomeScreen.style.display = 'none';
+    mainApp.style.display = 'flex';
+    document.body.style.overflow = 'auto';
+    
+    updateDisplays();
+    fillTextAreas();
+    
+    if (!animationFrameId) {
+        lastTimestamp = performance.now();
+        render(lastTimestamp);
+    }
+});
+
+speedSlider.addEventListener("input", (e) => {
+    speed = parseFloat(e.target.value);
+    updateDisplays();
+});
