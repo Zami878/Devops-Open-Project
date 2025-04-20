@@ -156,36 +156,73 @@ resetButton.addEventListener("click", () => {
 });
 
 
-//reset button
-resetButton.addEventListener("click", () => {
-    viewAngle = 0;
-    pitchAngle = 10;
-    viewAngleSlider.value = "0";
-    pitchAngleSlider.value = "10";
 
-    translateX = 0;
-    translateY = 0;
-    translateZ = 0;
-    translateXSlider.value = "0";
-    translateYSlider.value = "0";
-    translateZSlider.value = "0";
+function parseVertices(text) {
+    const lines = text.trim().split('\n');
+    const result = [];
 
-    speed = 0.1; //defualt speed
-    speedSlider.value = "0.1";
-    currentRotateY = 0; // Reset the current rotation angle
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
 
+        const parts = line.replace(/[\[\]\s]/g, '').split(',');
+        if (parts.length !== 3) {
+            throw new Error(`Line ${i+1}: Need exactly 3 numbers for a vertex`);
+        }
 
-    scaleX = 1;
-    scaleY = 1;
-    scaleZ = 1;
-    scaleXSlider.value = "1";
-    scaleYSlider.value = "1";
-    scaleZSlider.value = "1";
+        const nums = parts.map(part => parseFloat(part));
+        if (nums.some(isNaN)) {
+            throw new Error(`Line ${i+1}: Invalid number`);
+        }
 
-    vertices = defaultVertices.map(v => [...v]);
-    indices = defaultIndices.map(i => [...i]);
-    colors = defaultColors.map(c => [...c]);
+        result.push(nums);
+    }
+    return result;
+}
 
-    updateDisplays();
-    fillTextAreas();
-});
+function parseIndices(text) {
+    const lines = text.trim().split('\n');
+    const result = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+
+        const parts = line.replace(/[\[\]\s]/g, '').split(',');
+        if (parts.length !== 3) {
+            throw new Error(`Line ${i+1}: Need exactly 3 indices per face`);
+        }
+
+        const nums = parts.map(part => Math.round(parseFloat(part)));
+        if (nums.some(isNaN)) {
+            throw new Error(`Line ${i+1}: Invalid index`);
+        }
+
+        result.push(nums);
+    }
+    return result;
+}
+
+function parseColors(text) {
+    const lines = text.trim().split('\n');
+    const result = [];
+
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+
+        const parts = line.replace(/[\[\]\s]/g, '').split(',');
+        if (parts.length < 3 || parts.length > 4) {
+            throw new Error(`Line ${i+1}: Need 3 or 4 color values (RGB or RGBA)`);
+        }
+
+        const nums = parts.map(part => {
+            const num = parseInt(part);
+            return Math.max(0, Math.min(255, num));
+        });
+
+        if (nums.length === 3) nums.push(255); 
+        result.push(nums);
+    }
+    return result;
+}
