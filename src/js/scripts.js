@@ -154,6 +154,7 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
+<<<<<<< HEAD
 
 
 
@@ -226,3 +227,19 @@ function parseColors(text) {
     }
     return result;
 }
+=======
+scaleXSlider.addEventListener("input", (e) => {
+    scaleX = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+scaleYSlider.addEventListener("input", (e) => {
+    scaleY = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+scaleZSlider.addEventListener("input", (e) => {
+    scaleZ = parseFloat(e.target.value);
+    updateDisplays();
+});
+>>>>>>> 659f2fc2fe6013cf5b68673066e42c8e5bc3f6b2
