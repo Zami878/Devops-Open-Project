@@ -101,3 +101,43 @@ body, html {
     background: rgba(25, 39, 52, 0.6);
     backdrop-filter: blur(10px);
 }
+/* Controls */
+.controls {
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 20px;
+    min-width: 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    flex-shrink: 0;
+    align-self: stretch;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    backdrop-filter: blur(15px);
+    color: #dbe9f4;
+}
+
+.controls h2 {
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+    color: #cfe2f3;
+}
+
+.control {
+    margin-bottom: 18px;
+}
+
+
+.controls label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 0.95em;
+    color: #aac7de;
+}
+
+.controls input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+}
