@@ -26,6 +26,20 @@ const speedSlider = document.getElementById("speed");
 const translateXValue = document.getElementById("translateXValue");
 const translateYValue = document.getElementById("translateYValue");
 const translateZValue = document.getElementById("translateZValue");
+// Start button
+startEngineBtn.addEventListener("click", () => {
+    welcomeScreen.style.display = 'none';
+    mainApp.style.display = 'flex';
+    document.body.style.overflow = 'auto';
+    
+    updateDisplays();
+    fillTextAreas();
+    
+    if (!animationFrameId) {
+        lastTimestamp = performance.now();
+        render(lastTimestamp);
+    }
+});
 
 
 const scaleXValue = document.getElementById("scaleXValue");
