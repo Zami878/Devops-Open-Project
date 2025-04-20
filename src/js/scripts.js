@@ -154,3 +154,38 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
+
+
+//reset button
+resetButton.addEventListener("click", () => {
+    viewAngle = 0;
+    pitchAngle = 10;
+    viewAngleSlider.value = "0";
+    pitchAngleSlider.value = "10";
+
+    translateX = 0;
+    translateY = 0;
+    translateZ = 0;
+    translateXSlider.value = "0";
+    translateYSlider.value = "0";
+    translateZSlider.value = "0";
+
+    speed = 0.1; //defualt speed
+    speedSlider.value = "0.1";
+    currentRotateY = 0; // Reset the current rotation angle
+
+
+    scaleX = 1;
+    scaleY = 1;
+    scaleZ = 1;
+    scaleXSlider.value = "1";
+    scaleYSlider.value = "1";
+    scaleZSlider.value = "1";
+
+    vertices = defaultVertices.map(v => [...v]);
+    indices = defaultIndices.map(i => [...i]);
+    colors = defaultColors.map(c => [...c]);
+
+    updateDisplays();
+    fillTextAreas();
+});
