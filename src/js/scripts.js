@@ -473,3 +473,42 @@ function perspectiveMatrix(fov, aspect, near, far) {
         [0, 0, -1, 0] // Projects Z onto W
     ];
 }
+
+
+
+function viewMatrix(eye, center, up) {
+    const [eyeX, eyeY, eyeZ] = eye;
+    const [centerX, centerY, centerZ] = center;
+
+
+    // Forward direction
+    let fwdX = centerX - eyeX;
+    let fwdY = centerY - eyeY;
+    let fwdZ = centerZ - eyeZ;
+    const fwdLen = Math.sqrt(fwdX*fwdX + fwdY*fwdY + fwdZ*fwdZ);
+
+    let rightX = fwdY * normUpZ - fwdZ * normUpY;
+    let rightY = fwdZ * normUpX - fwdX * normUpZ;
+    let rightZ = fwdX * normUpY - fwdY * normUpX;
+
+
+    // Real up direction (Cross product: right x forward)
+    const upDirX = rightY * fwdZ - rightZ * fwdY;
+    const upDirY = rightZ * fwdX - rightX * fwdZ;
+    const upDirZ = rightX * fwdY - rightY * fwdX;
+    
+    // This upDir should already be normalized if right and fwd are orthonormal
+
+    // Translation part of the view matrix
+    const tx = -(rightX*eyeX + rightY*eyeY + rightZ*eyeZ);
+    const ty = -(upDirX*eyeX + upDirY*eyeY + upDirZ*eyeZ);
+    const tz = -(-fwdX*eyeX - fwdY*eyeY - fwdZ*eyeZ); // Simplified: fwdX*eyeX + fwdY*eyeY + fwdZ*eyeZ
+
+
+    return [
+        [rightX, rightY, rightZ, tx],
+        [upDirX, upDirY, upDirZ, ty],
+        [-fwdX, -fwdY, -fwdZ, tz],
+        [0, 0, 0, 1]
+    ];
+}
