@@ -186,3 +186,26 @@ body, html {
 .controls button#resetButton:hover {
     background-color: rgba(255, 140, 0, 0.3);
 }
+
+/* Textarea */
+textarea {
+    width: calc(100% - 12px);
+    min-height: 180px;
+    margin-bottom: 10px;
+    font-family: monospace;
+    font-size: 0.9em;
+    display: block;
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 5px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #dbe9f4;
+    backdrop-filter: blur(8px);
+}
+
+/* Divider */
+hr {
+    margin: 25px 0;
+    border: 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
