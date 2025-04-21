@@ -168,9 +168,6 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
-<<<<<<< HEAD
-
-
 
 updateGeometryButton.addEventListener("click", () => {
     try {
@@ -289,4 +286,4 @@ function parseColors(text) {
     }
     return result;
 }
-=======
+
