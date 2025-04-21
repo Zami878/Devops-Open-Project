@@ -440,31 +440,6 @@ function translationMatrix(tx, ty, tz) {
 }
 
 
-function rotationX(angle) {
-    const rad = angle * Math.PI / 180;
-    const c = Math.cos(rad);
-    const s = Math.sin(rad);
-    return [
-        [1,0,0,0],
-        [0,c,-s,0],
-        [0,s,c,0],
-        [0,0,0,1]
-    ];
-}
-
-
-function rotationY(angle) {
-    const rad = angle * Math.PI / 180;
-    const c = Math.cos(rad);
-    const s = Math.sin(rad);
-    return [
-        [c,0,s,0],
-        [0,1,0,0],
-        [-s,0,c,0],
-        [0,0,0,1]
-    ];
-}
-
 function rotationZ(angle) {
     const rad = angle * Math.PI / 180;
     const c = Math.cos(rad);
