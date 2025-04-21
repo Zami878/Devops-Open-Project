@@ -154,7 +154,6 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
-<<<<<<< HEAD
 
 
 
@@ -227,19 +226,40 @@ function parseColors(text) {
     }
     return result;
 }
-=======
-scaleXSlider.addEventListener("input", (e) => {
-    scaleX = parseFloat(e.target.value);
-    updateDisplays();
-});
 
-scaleYSlider.addEventListener("input", (e) => {
-    scaleY = parseFloat(e.target.value);
-    updateDisplays();
-});
 
-scaleZSlider.addEventListener("input", (e) => {
-    scaleZ = parseFloat(e.target.value);
-    updateDisplays();
-});
->>>>>>> 659f2fc2fe6013cf5b68673066e42c8e5bc3f6b2
+function setPixel(x, y, r, g, b, a = 255) {
+    x = Math.round(x);
+    y = Math.round(y);
+
+    if (x < 0 || y < 0 || x >= canvasWidth || y >= canvasHeight) return;
+
+    const index = (y * canvasWidth + x) * 4;
+    framebuffer.data[index] = r;
+    framebuffer.data[index + 1] = g;
+    framebuffer.data[index + 2] = b;
+    framebuffer.data[index + 3] = a;
+}
+
+function clearScreen(r, g, b, a = 255) {
+    const data = framebuffer.data;
+    for (let i = 0; i < data.length; i += 4) {
+        data[i] = r;
+        data[i + 1] = g;
+        data[i + 2] = b;
+        data[i + 3] = a;
+    }
+}
+
+function mixColors(color1, color2, t) {
+    t = Math.max(0, Math.min(1, t));
+    return [
+        Math.round(color1[0] + t * (color2[0] - color1[0])),
+        Math.round(color1[1] + t * (color2[1] - color1[1])),
+        Math.round(color1[2] + t * (color2[2] - color1[2])),
+        Math.round(color1[3] + t * (color2[3] - color1[3]))
+    ];
+}
+
+
+
