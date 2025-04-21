@@ -3,7 +3,7 @@
 A lightweight, JavaScript-based 3D software renderer capable of rendering any 3D model with interactive controls. This project showcases the implementation of a complete rendering pipeline, including transformations, perspective projection, and triangle rasterisation, all within a browser environment using HTML5 Canvas.
 
 
-#Overview
+Overview
 
 The 3D software renderer enables loading and displaying 3D models defined by vertices, indices, and colors. It includes:
 - A customizable camera system.
