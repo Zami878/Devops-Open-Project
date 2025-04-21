@@ -33,3 +33,9 @@ Update Readme.md    -> [Ishika]
 Updated index.html to create a UI section with sliders -> [Ishika]
 
 Added the start button to the js file in frontend -> [Ishika]
+
+Added the speed variable and it's functions  -> [Ishika]
+
+Updated index.html file to add more functions -> [Ishika]
+
+Merged pull request after reviewing -> [Ishika]
