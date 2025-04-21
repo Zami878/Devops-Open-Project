@@ -141,3 +141,48 @@ body, html {
     cursor: pointer;
 }
 
+/* Slider value */
+.controls span {
+    display: inline-block;
+    min-width: 40px;
+    margin-left: 10px;
+    font-family: monospace;
+    background: rgba(255,255,255,0.1);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    text-align: right;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #eef7ff;
+}
+
+/* Buttons in controls */
+.controls button {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    background: rgba(0, 132, 255, 0.2);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 8px rgba(0,132,255,0.4);
+}
+
+.controls button:hover {
+    background: rgba(0, 132, 255, 0.4);
+    transform: scale(1.02);
+}
+
+.controls button#resetButton {
+    background-color: rgba(255, 165, 0, 0.2);
+    box-shadow: 0 0 8px rgba(255, 165, 0, 0.3);
+}
+
+.controls button#resetButton:hover {
+    background-color: rgba(255, 140, 0, 0.3);
+}
