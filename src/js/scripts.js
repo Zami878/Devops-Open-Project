@@ -504,3 +504,80 @@ function perspectiveMatrix(fov, aspect, near, far) {
     ];
 }
 
+
+
+function viewMatrix(eye, center, up) {
+    const [eyeX, eyeY, eyeZ] = eye;
+    const [centerX, centerY, centerZ] = center;
+    const [upX, upY, upZ] = up;
+
+    // Forward direction
+    let fwdX = centerX - eyeX;
+    let fwdY = centerY - eyeY;
+    let fwdZ = centerZ - eyeZ;
+    const fwdLen = Math.sqrt(fwdX*fwdX + fwdY*fwdY + fwdZ*fwdZ);
+    // Normalize, handle potential zero length
+    if (fwdLen > 0.00001) {
+        fwdX /= fwdLen;
+        fwdY /= fwdLen;
+        fwdZ /= fwdLen;
+    } else {
+        fwdX = 0; fwdY = 0; fwdZ = -1; // Default if eye and center coincide
+    }
+
+
+    // Right direction (Cross product: forward x up) - Ensure up is normalized first
+    let upLen = Math.sqrt(upX*upX + upY*upY + upZ*upZ);
+     let normUpX = upX, normUpY = upY, normUpZ = upZ;
+     if (upLen > 0.00001) {
+        normUpX /= upLen; normUpY /= upLen; normUpZ /= upLen;
+     } else {
+        // Handle invalid up vector? Default to Y up maybe?
+        normUpX = 0; normUpY = 1; normUpZ = 0;
+     }
+
+
+    let rightX = fwdY * normUpZ - fwdZ * normUpY;
+    let rightY = fwdZ * normUpX - fwdX * normUpZ;
+    let rightZ = fwdX * normUpY - fwdY * normUpX;
+    const rightLen = Math.sqrt(rightX*rightX + rightY*rightY + rightZ*rightZ);
+     // Normalize right vector
+     if (rightLen > 0.00001) {
+        rightX /= rightLen;
+        rightY /= rightLen;
+        rightZ /= rightLen;
+    } else {
+        // If fwd and up are parallel, need a default right.
+        // If fwd is vertical, use X axis. Otherwise, cross with Y axis.
+        if (Math.abs(fwdY) > 0.999) { // Pointing straight up/down
+             rightX = 1; rightY = 0; rightZ = 0;
+        } else { // Cross fwd with world Y up [0,1,0]
+            rightX = -fwdZ; rightY = 0; rightZ = fwdX;
+             // Renormalize
+             const newRightLen = Math.sqrt(rightX*rightX + rightZ*rightZ);
+             if (newRightLen > 0.00001) {
+                rightX /= newRightLen; rightZ /= newRightLen;
+             }
+        }
+    }
+
+    // Real up direction (Cross product: right x forward)
+    const upDirX = rightY * fwdZ - rightZ * fwdY;
+    const upDirY = rightZ * fwdX - rightX * fwdZ;
+    const upDirZ = rightX * fwdY - rightY * fwdX;
+    // This upDir should already be normalized if right and fwd are orthonormal
+
+    // Translation part of the view matrix
+    const tx = -(rightX*eyeX + rightY*eyeY + rightZ*eyeZ);
+    const ty = -(upDirX*eyeX + upDirY*eyeY + upDirZ*eyeZ);
+    const tz = -(-fwdX*eyeX - fwdY*eyeY - fwdZ*eyeZ); // Simplified: fwdX*eyeX + fwdY*eyeY + fwdZ*eyeZ
+
+
+    return [
+        [rightX, rightY, rightZ, tx],
+        [upDirX, upDirY, upDirZ, ty],
+        [-fwdX, -fwdY, -fwdZ, tz],
+        [0, 0, 0, 1]
+    ];
+}
+
