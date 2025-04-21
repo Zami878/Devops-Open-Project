@@ -30,3 +30,17 @@ Update index.html   -> [Ishika]
 
 Update Readme.md    -> [Ishika]
 
+
+Update styles.css    -> [Shivanya]
+
+Update script.js    -> [Ishika]
+
+Update styles.css    -> [Shivanya]
+
+Update index.html   -> [Ishika]
+
+Update styles.css    -> [Shivanya]
+
+Update sript.js    -> [Shivanya]
+
+Update index.html   -> [Shivanya]
