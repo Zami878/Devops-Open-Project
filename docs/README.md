@@ -14,7 +14,7 @@ The 3D software renderer enables loading and displaying 3D models defined by ver
   - Building a foundation for advanced graphics applications.
 
 
-Technical Details
+## Technical Details
 - Language: JavaScript.
 - Environment: Browser (HTML5 Canvas).
   
