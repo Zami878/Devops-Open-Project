@@ -60,3 +60,16 @@ Added functions for canvasapi to work -> [Keshav]
 
 Added functions for drawing line and triangles -> [Keshav]
 
+Merged pull request after reviewing -> [Ishika]
+
+Added the control panel  -> [Ishika]
+
+Created  a UI section with a "Reset" button -> [Ishika]
+
+Added the fillTextAreas function -> [Ishika]
+
+Added an "Update Geometry" button with a <canvas> in js -> [Ishika]
+
+Styled the main canvas area with a centered layoyt -> [Ishika]
+
+Added #renderer canvas to stlyle borders -> [Ishika]
