@@ -26,21 +26,6 @@ const speedSlider = document.getElementById("speed");
 const translateXValue = document.getElementById("translateXValue");
 const translateYValue = document.getElementById("translateYValue");
 const translateZValue = document.getElementById("translateZValue");
-// Start button
-startEngineBtn.addEventListener("click", () => {
-    welcomeScreen.style.display = 'none';
-    mainApp.style.display = 'flex';
-    document.body.style.overflow = 'auto';
-    
-    updateDisplays();
-    fillTextAreas();
-    
-    if (!animationFrameId) {
-        lastTimestamp = performance.now();
-        render(lastTimestamp);
-    }
-});
-
 
 const scaleXValue = document.getElementById("scaleXValue");
 const scaleYValue = document.getElementById("scaleYValue");
@@ -117,6 +102,20 @@ const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const framebuffer = ctx.createImageData(canvasWidth, canvasHeight);
 
+startEngineBtn.addEventListener("click", () => {
+    welcomeScreen.style.display = 'none';
+    mainApp.style.display = 'flex';
+    document.body.style.overflow = 'auto';
+
+    updateDisplays();
+    fillTextAreas();
+
+    if (!animationFrameId) {
+        lastTimestamp = performance.now(); // Initialize timestamp here
+        animationFrameId = requestAnimationFrame(render); // Start render loop
+    }
+});
+
 
 // Object controls
 translateXSlider.addEventListener("input", (e) => {
@@ -133,6 +132,12 @@ translateZSlider.addEventListener("input", (e) => {
     translateZ = parseFloat(e.target.value);
     updateDisplays();
 });
+
+speedSlider.addEventListener("input", (e) => {
+    speed = parseFloat(e.target.value);
+    updateDisplays();
+});
+
 
 
 // Reset button 
@@ -168,7 +173,59 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
-<<<<<<< HEAD
+
+function fillTextAreas() {
+    vertexInput.value = vertices.map(v => [${v.join(', ')}]).join('\n');
+    indexInput.value = indices.map(i => [${i.join(', ')}]).join('\n');
+    colorInput.value = colors.map(c => [${c.join(', ')}]).join('\n');
+}
+
+
+updateGeometryButton.addEventListener("click", () => {
+    try {
+        const newVertices = parseVertices(vertexInput.value);
+        const newIndices = parseIndices(indexInput.value);
+        const newColors = parseColors(colorInput.value);
+
+        if (newVertices.length !== newColors.length) {
+            alert("Vertex and color counts must match!");
+            return;
+        }
+
+        // Check indices are valid
+        let maxIndex = -1;
+        for (const face of newIndices) {
+            if (face.length !== 3) {
+                alert("Each face must have 3 indices!");
+                return;
+            }
+            for (const index of face) {
+                if (isNaN(index) || !Number.isInteger(index)) {
+                    alert("Indices must be whole numbers!");
+                    return;
+                }
+                if (index < 0) {
+                    alert("Indices can't be negative!");
+                    return;
+                }
+                maxIndex = Math.max(maxIndex, index);
+            }
+        }
+
+        if (maxIndex >= newVertices.length) {
+            alert(`Index ${maxIndex} is too big! Only ${newVertices.length} vertices.`);
+            return;
+        }
+
+        vertices = newVertices;
+        indices = newIndices;
+        colors = newColors;
+        alert("Shape updated!");
+
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+}); 
 
 
 
@@ -241,44 +298,5 @@ function parseColors(text) {
     }
     return result;
 }
-=======
-scaleXSlider.addEventListener("input", (e) => {
-    scaleX = parseFloat(e.target.value);
-    updateDisplays();
-});
 
-scaleYSlider.addEventListener("input", (e) => {
-    scaleY = parseFloat(e.target.value);
-    updateDisplays();
-});
-
-scaleZSlider.addEventListener("input", (e) => {
-    scaleZ = parseFloat(e.target.value);
-    updateDisplays();
-});
->>>>>>> 659f2fc2fe6013cf5b68673066e42c8e5bc3f6b2
-// Start button
-startEngineBtn.addEventListener("click", () => {
-    welcomeScreen.style.display = 'none';
-    mainApp.style.display = 'flex';
-    document.body.style.overflow = 'auto';
-    
-    updateDisplays();
-    fillTextAreas();
-    
-    if (!animationFrameId) {
-        lastTimestamp = performance.now();
-        render(lastTimestamp);
-    }
-});
-
-speedSlider.addEventListener("input", (e) => {
-    speed = parseFloat(e.target.value);
-    updateDisplays();
-});
-function fillTextAreas() {
-    vertexInput.value = vertices.map(v => [${v.join(', ')}]).join('\n');
-    indexInput.value = indices.map(i => [${i.join(', ')}]).join('\n');
-    colorInput.value = colors.map(c => [${c.join(', ')}]).join('\n');
-}
 
