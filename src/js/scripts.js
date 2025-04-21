@@ -133,6 +133,11 @@ translateZSlider.addEventListener("input", (e) => {
     updateDisplays();
 });
 
+speedSlider.addEventListener("input", (e) => {
+    speed = parseFloat(e.target.value);
+    updateDisplays();
+});
+
 
 
 // Reset button 
@@ -168,6 +173,13 @@ resetButton.addEventListener("click", () => {
     updateDisplays();
     fillTextAreas();
 });
+
+function fillTextAreas() {
+    vertexInput.value = vertices.map(v => [${v.join(', ')}]).join('\n');
+    indexInput.value = indices.map(i => [${i.join(', ')}]).join('\n');
+    colorInput.value = colors.map(c => [${c.join(', ')}]).join('\n');
+}
+
 
 updateGeometryButton.addEventListener("click", () => {
     try {
@@ -286,4 +298,5 @@ function parseColors(text) {
     }
     return result;
 }
+
 
