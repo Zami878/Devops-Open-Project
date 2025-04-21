@@ -452,7 +452,23 @@ function rotationZ(angle) {
     ];
 }
 
+function multiplyMatrices(m1, m2) {  // takes the input of two matrix 
+    const result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]; // enmpty result value matrix
 
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            let sum = 0;
+            for (let k = 0; k < 4; k++) {
+                sum += m1[i][k] * m2[k][j];
+            }
+            result[i][j] = sum;
+        }
+    }
+    return result;
+} 
+
+
+  
 function scalingMatrix(sx, sy, sz) {
     return [
         [sx,0,0,0],
@@ -473,3 +489,4 @@ function perspectiveMatrix(fov, aspect, near, far) {
         [0, 0, -1, 0] // Projects Z onto W
     ];
 }
+
