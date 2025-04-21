@@ -38,4 +38,4 @@ The 3D software renderer enables loading and displaying 3D models defined by ver
 ## Setup
 Prerequisites:
 - Git: Ensure Git is installed for version control and managing repositories.
-- Modern Browser: Use browsers like Chrome, Firefox, or Edge for running the HTML5 Canvas environment.
+- Modern Browser: Use browsers like Chrome, Firefox, or Edge to run the HTML5 Canvas environment.
