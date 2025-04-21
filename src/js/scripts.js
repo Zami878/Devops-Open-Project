@@ -327,28 +327,6 @@ function mixColors(color1, color2, t) {
 }
 
 
-function drawLine(x1, x2, y, color1, color2) {
-    const startX = Math.max(0, Math.ceil(x1));
-    const endX = Math.min(canvasWidth - 1, Math.floor(x2));
-
-    // Avoid division by zero if startX === endX (single pixel line)
-    const denominator = endX - startX;
-    if (denominator === 0) {
-        if (startX >= 0 && startX < canvasWidth) {
-             // Use the average or start color for a single pixel
-             const color = mixColors(color1, color2, 0.5);
-             setPixel(startX, y, ...color);
-        }
-        return;
-    }
-
-    for (let x = startX; x <= endX; x++) {
-        const t = (x - startX) / denominator;
-        const color = mixColors(color1, color2, t);
-        setPixel(x, y, ...color);
-    }
-}
-
 
 function drawTriangle(v0, v1, v2, c0, c1, c2) {
     // Sort vertices by Y (top to bottom)
