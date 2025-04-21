@@ -581,31 +581,32 @@ function viewMatrix(eye, center, up) {
     ];
 }
 
+
 function render(timestamp) {
     if (!ctx || !framebuffer) {
+        // Stop if canvas context is lost
         if (animationFrameId) cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
-        console.log("Canvas context lost, stopping render.");
         return;
     }
 
-    const deltaTime = timestamp - lastTimestamp;
+    // Calculate time delta for smooth animation
+    const deltaTime = timestamp - lastTimestamp; // T milliseconds 
     lastTimestamp = timestamp;
 
     clearScreen(0, 0, 0);
 
     if (vertices.length === 0 || !indices || indices.length === 0 || !colors) {
-        console.log("Geometry is empty or invalid. Skipping frame.");
+        // Don't try to render if geometry is invalid/empty
         ctx.putImageData(framebuffer, 0, 0);
-        animationFrameId = requestAnimationFrame(render);
+        animationFrameId = requestAnimationFrame(render); // Continue loop for controls
         return;
     }
 
-    const rotationDegreesPerSecond = speed * 90;
-    currentRotateY += (rotationDegreesPerSecond * deltaTime) / 1000.0;
-    currentRotateY %= 360;
 
-    console.log(`Rotation Y: ${currentRotateY.toFixed(2)} degrees`);
+    const rotationDegreesPerSecond = speed * 90; 
+    currentRotateY += (rotationDegreesPerSecond * deltaTime) / 1000.0; 
+    currentRotateY %= 360; 
 
     const aspect = canvasWidth / canvasHeight;
     const fov = 60;
@@ -615,90 +616,93 @@ function render(timestamp) {
     const yaw = viewAngle * Math.PI / 180;
     const pitch = pitchAngle * Math.PI / 180;
 
-    const cameraDistance = 10;
+
+    const cameraDistance = 10; // Distance from origin
     const eyeX = cameraDistance * Math.cos(pitch) * Math.sin(yaw);
     const eyeY = cameraDistance * Math.sin(pitch);
     const eyeZ = cameraDistance * Math.cos(pitch) * Math.cos(yaw);
 
     const eye = [eyeX, eyeY, eyeZ];
     const target = [0, 0, 0];
-    const up = [0, 1, 0];
+    const up = [0, 1, 0]; // Assuming Y is up
 
-    console.log("Camera eye:", eye);
-
+ 
     const view = viewMatrix(eye, target, up);
     const proj = perspectiveMatrix(fov, aspect, near, far);
 
+    // --- Object transformation ---
     const trans = translationMatrix(translateX, translateY, translateZ);
-    const rotY = rotationY(currentRotateY);
+    const rotY = rotationY(currentRotateY); // Use the updated angle
     const scale = scalingMatrix(scaleX, scaleY, scaleZ);
 
+    // --- Combine matrices ---
+    // Order: Scale -> Rotate -> Translate (applied right-to-left)
+    // World = Translate * Rotate * Scale
     const rotScale = multiplyMatrices(rotY, scale);
     const world = multiplyMatrices(trans, rotScale);
+
+    // Final transform: Projection * View * World
     const viewWorld = multiplyMatrices(view, world);
     const transform = multiplyMatrices(proj, viewWorld);
 
-    console.log("Transformation matrix calculated.");
-
+    // --- Transform all vertices ---
     const transformedVerts = [];
-    const vertDepths = [];
+    const vertDepths = []; // Store W or Z for depth sorting/testing if needed
 
     for (let i = 0; i < vertices.length; i++) {
         const vert = vertices[i];
-        const vec = [vert[0], vert[1], vert[2], 1];
+        const vec = [vert[0], vert[1], vert[2], 1]; // Homogeneous coordinates
         const clip = multiplyMatrixVector(transform, vec);
 
+        // Perspective divide
         const w = clip[3];
 
-        if (w < near) {
-            transformedVerts.push(null);
-            vertDepths.push(Infinity);
-            console.log(`Vertex ${i} clipped due to W < near.`);
+        // Basic clipping (clip if behind near plane or W is too small)
+        if (w < near) { // Use 'near' plane distance for clipping
+            transformedVerts.push(null); // Mark vertex as clipped
+            vertDepths.push(Infinity); // Give clipped vertices infinite depth
             continue;
         }
 
         const invW = 1.0 / w;
         const ndcX = clip[0] * invW;
         const ndcY = clip[1] * invW;
-        const ndcZ = clip[2] * invW;
+        const ndcZ = clip[2] * invW; // Normalized device coordinates Z (-1 to 1 or 0 to 1)
 
+        // Viewport transform (Normalized Device Coordinates to Screen Coordinates)
         const screenX = (ndcX + 1) * 0.5 * canvasWidth;
+        // Y is often inverted in screen space (0 at top)
         const screenY = (1 - ndcY) * 0.5 * canvasHeight;
 
-        transformedVerts.push([screenX, screenY, ndcZ]);
-        vertDepths.push(w);
-
-        console.log(`Vertex ${i} transformed to screen: (${screenX.toFixed(2)}, ${screenY.toFixed(2)}, Z: ${ndcZ.toFixed(2)})`);
+        transformedVerts.push([screenX, screenY, ndcZ]); // Store screen coords and Z
+        vertDepths.push(w); // Store original W for potential depth calculations
     }
 
-    let trianglesDrawn = 0;
+    // --- Draw all triangles ---
     for (let i = 0; i < indices.length; i++) {
         const [a, b, c] = indices[i];
         const v0 = transformedVerts[a];
         const v1 = transformedVerts[b];
         const v2 = transformedVerts[c];
 
-        if (!v0 || !v1 || !v2) {
-            console.log(`Triangle ${i} skipped due to clipped vertex.`);
-            continue;
-        }
+        // Skip triangle if any vertex was clipped
+        if (!v0 || !v1 || !v2) continue;
 
-        const c0 = colors[a] || [255, 255, 255, 255];
+        const c0 = colors[a] || [255, 255, 255, 255]; // Default to white if color missing
         const c1 = colors[b] || [255, 255, 255, 255];
         const c2 = colors[c] || [255, 255, 255, 255];
 
+
+        // Backface culling using screen space coordinates
+        // Calculate signed area: (x1-x0)*(y2-y0) - (y1-y0)*(x2-x0)
+        // If area is negative (clockwise winding order in screen space), cull it.
         const area = (v1[0]-v0[0])*(v2[1]-v0[1]) - (v1[1]-v0[1])*(v2[0]-v0[0]);
-        if (area < 0) {
-            console.log(`Triangle ${i} culled (backface).`);
-            continue;
-        }
+        if (area < 0) continue; // Cull back-facing triangles
 
         drawTriangle(v0, v1, v2, c0, c1, c2);
-        trianglesDrawn++;
     }
 
-    console.log(`Frame rendered with ${trianglesDrawn} triangle(s).`);
-
-    ctx.putImageData(framebuffer, 0, 0);
-    animationFrameId = requestAnimationFrame(render);
+    // --- Finalize Frame ---
+    ctx.putImageData(framebuffer, 0, 0); // Draw the framebuffer to the canvas
+    animationFrameId = requestAnimationFrame(render); // Request next frame
 }
