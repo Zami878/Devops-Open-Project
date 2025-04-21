@@ -327,6 +327,28 @@ function mixColors(color1, color2, t) {
 }
 
 
+function drawLine(x1, x2, y, color1, color2) {
+    const startX = Math.max(0, Math.ceil(x1));
+    const endX = Math.min(canvasWidth - 1, Math.floor(x2));
+
+    // Avoid division by zero if startX === endX (single pixel line)
+    const denominator = endX - startX;
+    if (denominator === 0) {
+        if (startX >= 0 && startX < canvasWidth) {
+             // Use the average or start color for a single pixel
+             const color = mixColors(color1, color2, 0.5);
+             setPixel(startX, y, ...color);
+        }
+        return;
+    }
+
+    for (let x = startX; x <= endX; x++) {
+        const t = (x - startX) / denominator;
+        const color = mixColors(color1, color2, t);
+        setPixel(x, y, ...color);
+    }
+}
+
 
 function drawTriangle(v0, v1, v2, c0, c1, c2) {
     // Sort vertices by Y (top to bottom)
@@ -430,6 +452,7 @@ function rotationZ(angle) {
     ];
 }
 
+
 function multiplyMatrixVector(matrix, vector) {
     const [x, y, z = 1] = vector;
     
@@ -440,3 +463,43 @@ function multiplyMatrixVector(matrix, vector) {
         
     ];
 } 
+
+function multiplyMatrices(m1, m2) {  // takes the input of two matrix 
+    const result = [[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]; // enmpty result value matrix
+
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 4; j++) {
+            let sum = 0;
+            for (let k = 0; k < 4; k++) {
+                sum += m1[i][k] * m2[k][j];
+            }
+            result[i][j] = sum;
+        }
+    }
+    return result;
+} 
+
+
+  
+function scalingMatrix(sx, sy, sz) {
+    return [
+        [sx,0,0,0],
+        [0,sy,0,0],
+        [0,0,sz,0],
+        [0,0,0,1]
+    ];
+}
+
+function perspectiveMatrix(fov, aspect, near, far) {
+    const f = 1 / Math.tan(fov * 0.5 * Math.PI / 180);
+    const rangeInv = 1 / (near - far);
+
+    return [
+        [f/aspect, 0, 0, 0],
+        [0, f, 0, 0],
+        [0, 0, (far+near)*rangeInv, 2*far*near*rangeInv],
+        [0, 0, -1, 0] // Projects Z onto W
+    ];
+}
+
+
