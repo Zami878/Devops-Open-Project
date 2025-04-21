@@ -52,10 +52,6 @@ Updated index.html file to add more functions -> [Ishika]
 
 Merged pull request after reviewing -> [Ishika]
 
-Finished css code -> [Shivanya]
-
-Finished Html code -> [Ishika]
-
 Added functions for canvasapi to work -> [Keshav]
 
 Added functions for drawing line and triangles -> [Keshav]
@@ -73,3 +69,7 @@ Added an "Update Geometry" button with a <canvas> in js -> [Ishika]
 Styled the main canvas area with a centered layoyt -> [Ishika]
 
 Added #renderer canvas to stlyle borders -> [Ishika]
+
+Finished css code -> [Shivanya]
+
+Finished Html code -> [Ishika]
