@@ -2,19 +2,43 @@ Initial commit: Add project structure with src, docs, tests, and configs  [Kesha
 
 Updated README.md -> [Keshav]
 
+Update index.html   -> [Ishika]
+
+Update Readme.md    -> [Ishika]
+
 Seting up canvas screen to render shape and setting default shape. -> [Keshav]
+
+Update styles.css    -> [Shivanya]
+
+Update script.js    -> [Ishika]
+
+Update styles.css    -> [Shivanya]
 
 Added slider for translation in x,y,z axes and also added logic for reset button.  -> [Keshav]
 
+Update index.html   -> [Ishika]
+
 Added functions for ccanvas api and some backlog work.  -> [Keshav]
+
+Update styles.css    -> [Shivanya]
 
 Added functions for drawing line and triangles.  -> [Keshav]
 
+Updated index.html to create a UI section with sliders -> [Ishika]
+
 Added Matrcies to perform linear transformations -> [Keshav]
+
+Update sript.js    -> [Shivanya]
+
+Update index.html   -> [Shivanya]
 
 Fixed reported bugs -> [Keshav]
 
 Fixing drawline function -> [Keshav]
+
+Added the start button to the js file in frontend -> [Ishika]
+
+Added the speed variable and it's functions  -> [Ishika]
 
 Fixed drawline function -> [Keshav]
 
@@ -24,18 +48,11 @@ Added view matrix. -> [Keshav]
 
 Made view matrix to handle edge cases. -> [Keshav]
 
-
-
-Update index.html   -> [Ishika]
-
-Update Readme.md    -> [Ishika]
-
-Updated index.html to create a UI section with sliders -> [Ishika]
-
-Added the start button to the js file in frontend -> [Ishika]
-
-Added the speed variable and it's functions  -> [Ishika]
-
 Updated index.html file to add more functions -> [Ishika]
 
 Merged pull request after reviewing -> [Ishika]
+
+Finished css code -> [Shivanya]
+
+Finished Html code -> [Ishika]
+
