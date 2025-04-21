@@ -418,3 +418,61 @@ function drawTriangle(v0, v1, v2, c0, c1, c2) {
         }
      }
 }
+
+
+
+function identityMatrix() {
+    return [
+        [1,0,0,0],
+        [0,1,0,0],
+        [0,0,1,0],
+        [0,0,0,1]
+    ];
+}
+
+function translationMatrix(tx, ty, tz) {
+    return [
+        [1,0,0,tx],
+        [0,1,0,ty],
+        [0,0,1,tz],
+        [0,0,0,1]
+    ];
+}
+
+
+function rotationX(angle) {
+    const rad = angle * Math.PI / 180;
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    return [
+        [1,0,0,0],
+        [0,c,-s,0],
+        [0,s,c,0],
+        [0,0,0,1]
+    ];
+}
+
+
+function rotationY(angle) {
+    const rad = angle * Math.PI / 180;
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    return [
+        [c,0,s,0],
+        [0,1,0,0],
+        [-s,0,c,0],
+        [0,0,0,1]
+    ];
+}
+
+function rotationZ(angle) {
+    const rad = angle * Math.PI / 180;
+    const c = Math.cos(rad);
+    const s = Math.sin(rad);
+    return [
+        [c,-s,0,0],
+        [s,c,0,0],
+        [0,0,1,0],
+        [0,0,0,1]
+    ];
+}
