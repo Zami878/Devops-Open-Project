@@ -326,3 +326,95 @@ function mixColors(color1, color2, t) {
 
 }
 
+
+function drawLine(x1, x2, y, color1, color2) {
+    const startX = Math.max(0, Math.ceil(x1));
+    const endX = Math.min(canvasWidth - 1, Math.floor(x2));
+
+    // Avoid division by zero if startX === endX (single pixel line)
+    const denominator = endX - startX;
+    if (denominator === 0) {
+        if (startX >= 0 && startX < canvasWidth) {
+             // Use the average or start color for a single pixel
+             const color = mixColors(color1, color2, 0.5);
+             setPixel(startX, y, ...color);
+        }
+        return;
+    }
+
+    for (let x = startX; x <= endX; x++) {
+        const t = (x - startX) / denominator;
+        const color = mixColors(color1, color2, t);
+        setPixel(x, y, ...color);
+    }
+}
+
+
+function drawTriangle(v0, v1, v2, c0, c1, c2) {
+    // Sort vertices by Y (top to bottom)
+    let points = [[...v0], [...v1], [...v2]]; // Use copies
+    let pointColors = [c0, c1, c2];
+
+    // Bubble sort for 3 elements
+    if (points[1][1] < points[0][1]) {
+        [points[0], points[1]] = [points[1], points[0]];
+        [pointColors[0], pointColors[1]] = [pointColors[1], pointColors[0]];
+    }
+    if (points[2][1] < points[0][1]) {
+        [points[0], points[2]] = [points[2], points[0]];
+        [pointColors[0], pointColors[2]] = [pointColors[2], pointColors[0]];
+    }
+    if (points[2][1] < points[1][1]) {
+        [points[1], points[2]] = [points[2], points[1]];
+        [pointColors[1], pointColors[2]] = [pointColors[2], pointColors[1]];
+    }
+
+    const [top, middle, bottom] = points;
+    const [topColor, middleColor, bottomColor] = pointColors;
+
+    // Calculate Y differences to avoid division by zero
+    const dy_mid_top = middle[1] - top[1];
+    const dy_bot_top = bottom[1] - top[1];
+    const dy_bot_mid = bottom[1] - middle[1];
+
+    // Draw top half (top to middle)
+    if (dy_mid_top > 0) { // Avoid horizontal line case handled by bottom half or check separately
+      for (let y = Math.max(0, Math.ceil(top[1])); y <= Math.min(canvasHeight - 1, Math.floor(middle[1])); y++) {
+          const t1 = (y - top[1]) / dy_mid_top;
+          // Check if bottom[1] === top[1] (horizontal top edge)
+          const t2 = dy_bot_top > 0 ? (y - top[1]) / dy_bot_top : 0; // Avoid division by zero
+
+          const x1 = top[0] + t1 * (middle[0] - top[0]);
+          const x2 = top[0] + t2 * (bottom[0] - top[0]);
+
+          const color1 = mixColors(topColor, middleColor, t1);
+          const color2 = mixColors(topColor, bottomColor, t2);
+
+          if (x1 < x2) {
+              drawLine(x1, x2, y, color1, color2);
+          } else {
+              drawLine(x2, x1, y, color2, color1);
+          }
+      }
+    }
+
+    // Draw bottom half (middle to bottom)
+     if (dy_bot_mid > 0) { // Avoid horizontal line case
+        for (let y = Math.max(0, Math.ceil(middle[1]) + 1); y <= Math.min(canvasHeight - 1, Math.floor(bottom[1])); y++) {
+            const t1 = (y - middle[1]) / dy_bot_mid;
+            const t2 = dy_bot_top > 0 ? (y - top[1]) / dy_bot_top : 1; // Avoid division by zero, t2 goes from top to bottom
+
+            const x1 = middle[0] + t1 * (bottom[0] - middle[0]);
+            const x2 = top[0] + t2 * (bottom[0] - top[0]);
+
+            const color1 = mixColors(middleColor, bottomColor, t1);
+            const color2 = mixColors(topColor, bottomColor, t2);
+
+            if (x1 < x2) {
+                drawLine(x1, x2, y, color1, color2);
+            } else {
+                drawLine(x2, x1, y, color2, color1);
+            }
+        }
+     }
+}
