@@ -451,3 +451,25 @@ function rotationZ(angle) {
         [0,0,0,1]
     ];
 }
+
+
+function scalingMatrix(sx, sy, sz) {
+    return [
+        [sx,0,0,0],
+        [0,sy,0,0],
+        [0,0,sz,0],
+        [0,0,0,1]
+    ];
+}
+
+function perspectiveMatrix(fov, aspect, near, far) {
+    const f = 1 / Math.tan(fov * 0.5 * Math.PI / 180);
+    const rangeInv = 1 / (near - far);
+
+    return [
+        [f/aspect, 0, 0, 0],
+        [0, f, 0, 0],
+        [0, 0, (far+near)*rangeInv, 2*far*near*rangeInv],
+        [0, 0, -1, 0] // Projects Z onto W
+    ];
+}
