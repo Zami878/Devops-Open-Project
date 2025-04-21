@@ -39,3 +39,15 @@ Added the speed variable and it's functions  -> [Ishika]
 Updated index.html file to add more functions -> [Ishika]
 
 Merged pull request after reviewing -> [Ishika]
+
+Added the control panel  -> [Ishika]
+
+Created  a UI section with a "Reset" button -> [Ishika]
+
+Added the fillTextAreas function -> [Ishika]
+
+Added an "Update Geometry" button with a <canvas> in js -> [Ishika]
+
+Styled the main canvas area with a centered layoyt -> [Ishika]
+
+Added #renderer canvas to stlyle borders -> [Ishika}
