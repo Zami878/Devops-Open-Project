@@ -429,3 +429,14 @@ function rotationZ(angle) {
         [0,0,0,1]
     ];
 }
+
+function multiplyMatrixVector(matrix, vector) {
+    const [x, y, z = 1] = vector;
+    
+   return [
+        m[0][0]*x + m[0][1]*y + m[0][2]*z + m[0][3]*w,
+        m[1][0]*x + m[1][1]*y + m[1][2]*z + m[1][3]*w,
+        m[2][0]*x + m[2][1]*y + m[2][2]*z + m[2][3]*w,
+        
+    ];
+} 
