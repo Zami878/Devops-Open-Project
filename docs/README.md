@@ -20,7 +20,7 @@ The 3D software renderer enables loading and displaying 3D models defined by ver
   
 
 
-Key Features
+## Key Features
 1. Versatile 3D Rendering:  
    Renders 3D models using a software-based pipeline without relying on Webgl.
 2. Interactive Controls:
