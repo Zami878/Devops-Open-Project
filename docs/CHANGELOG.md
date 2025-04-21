@@ -20,7 +20,7 @@ Fixed drawline function -> [Keshav]
 
 Added scaling matrix and prespective projection matrix -> [Keshav]
 
-Added view matrix.
+Added view matrix. -> [Keshav]
 
 Made view matrix to handle edge cases. -> [Keshav]
 
@@ -30,3 +30,6 @@ Update index.html   -> [Ishika]
 
 Update Readme.md    -> [Ishika]
 
+Updated index.html to create a UI section with sliders -> [Ishika]
+
+Added the start button to the js file in frontend -> [Ishika]
