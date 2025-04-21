@@ -60,4 +60,3 @@ Added functions for canvasapi to work -> [Keshav]
 
 Added functions for drawing line and triangles -> [Keshav]
 
-Added Documentation for Frontend -> [Keshav]
