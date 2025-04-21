@@ -102,6 +102,25 @@ const canvasWidth = canvas.width;
 const canvasHeight = canvas.height;
 const framebuffer = ctx.createImageData(canvasWidth, canvasHeight);
 
+
+
+function updateDisplays() {
+    viewAngleValue.textContent = viewAngle + '°';
+    pitchAngleValue.textContent = pitchAngle + '°';
+
+    translateXValue.textContent = translateX.toFixed(1);
+    translateYValue.textContent = translateY.toFixed(1);
+    translateZValue.textContent = translateZ.toFixed(1);
+
+    // Removed rotateX/Y/Z updates
+    speedValue.textContent = speed.toFixed(2); // Update speed display
+
+    scaleXValue.textContent = scaleX.toFixed(1);
+    scaleYValue.textContent = scaleY.toFixed(1);
+    scaleZValue.textContent = scaleZ.toFixed(1);
+}
+
+
 startEngineBtn.addEventListener("click", () => {
     welcomeScreen.style.display = 'none';
     mainApp.style.display = 'flex';
@@ -115,6 +134,18 @@ startEngineBtn.addEventListener("click", () => {
         animationFrameId = requestAnimationFrame(render); // Start render loop
     }
 });
+
+
+viewAngleSlider.addEventListener("input", (e) => {
+    viewAngle = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+pitchAngleSlider.addEventListener("input", (e) => {
+    pitchAngle = parseFloat(e.target.value);
+    updateDisplays();
+});
+
 
 
 // Object controls
@@ -138,6 +169,21 @@ speedSlider.addEventListener("input", (e) => {
     updateDisplays();
 });
 
+
+scaleXSlider.addEventListener("input", (e) => {
+    scaleX = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+scaleYSlider.addEventListener("input", (e) => {
+    scaleY = parseFloat(e.target.value);
+    updateDisplays();
+});
+
+scaleZSlider.addEventListener("input", (e) => {
+    scaleZ = parseFloat(e.target.value);
+    updateDisplays();
+});
 
 
 // Reset button 
@@ -300,3 +346,35 @@ function parseColors(text) {
 }
 
 
+function setPixel(x, y, r, g, b, a = 255) {
+    x = Math.round(x);
+    y = Math.round(y);
+
+    if (x < 0 || y < 0 || x >= canvasWidth || y >= canvasHeight) return;
+
+    const index = (y * canvasWidth + x) * 4;
+    framebuffer.data[index] = r;
+    framebuffer.data[index + 1] = g;
+    framebuffer.data[index + 2] = b;
+    framebuffer.data[index + 3] = a;
+}
+
+function clearScreen(r, g, b, a = 255) {
+    const data = framebuffer.data;
+    for (let i = 0; i < data.length; i += 4) {
+        data[i] = r;
+        data[i + 1] = g;
+        data[i + 2] = b;
+        data[i + 3] = a;
+    }
+}
+
+function mixColors(color1, color2, t) {
+    t = Math.max(0, Math.min(1, t));
+    return [
+        Math.round(color1[0] + t * (color2[0] - color1[0])),
+        Math.round(color1[1] + t * (color2[1] - color1[1])),
+        Math.round(color1[2] + t * (color2[2] - color1[2])),
+        Math.round(color1[3] + t * (color2[3] - color1[3]))
+    ];
+}
