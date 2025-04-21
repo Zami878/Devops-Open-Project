@@ -24,3 +24,9 @@ Added view matrix.
 
 Made view matrix to handle edge cases. -> [Keshav]
 
+
+
+Update index.html   -> [Ishika]
+
+Update Readme.md    -> [Ishika]
+
