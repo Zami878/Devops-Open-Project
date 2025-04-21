@@ -220,60 +220,6 @@ resetButton.addEventListener("click", () => {
     fillTextAreas();
 });
 
-function fillTextAreas() {
-    vertexInput.value = vertices.map(v => [${v.join(', ')}]).join('\n');
-    indexInput.value = indices.map(i => [${i.join(', ')}]).join('\n');
-    colorInput.value = colors.map(c => [${c.join(', ')}]).join('\n');
-}
-
-
-updateGeometryButton.addEventListener("click", () => {
-    try {
-        const newVertices = parseVertices(vertexInput.value);
-        const newIndices = parseIndices(indexInput.value);
-        const newColors = parseColors(colorInput.value);
-
-        if (newVertices.length !== newColors.length) {
-            alert("Vertex and color counts must match!");
-            return;
-        }
-
-        // Check indices are valid
-        let maxIndex = -1;
-        for (const face of newIndices) {
-            if (face.length !== 3) {
-                alert("Each face must have 3 indices!");
-                return;
-            }
-            for (const index of face) {
-                if (isNaN(index) || !Number.isInteger(index)) {
-                    alert("Indices must be whole numbers!");
-                    return;
-                }
-                if (index < 0) {
-                    alert("Indices can't be negative!");
-                    return;
-                }
-                maxIndex = Math.max(maxIndex, index);
-            }
-        }
-
-        if (maxIndex >= newVertices.length) {
-            alert(`Index ${maxIndex} is too big! Only ${newVertices.length} vertices.`);
-            return;
-        }
-
-        vertices = newVertices;
-        indices = newIndices;
-        colors = newColors;
-        alert("Shape updated!");
-
-    } catch (error) {
-        alert("Error: " + error.message);
-    }
-}); 
-
-
 
 function parseVertices(text) {
     const lines = text.trim().split('\n');
@@ -377,4 +323,6 @@ function mixColors(color1, color2, t) {
         Math.round(color1[2] + t * (color2[2] - color1[2])),
         Math.round(color1[3] + t * (color2[3] - color1[3]))
     ];
+
 }
+
