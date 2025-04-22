@@ -37,5 +37,5 @@ The 3D software renderer enables loading and displaying 3D models defined by ver
 
 ## Setup
 Prerequisites:
-- Git: Ensure Git is installed for version control and managing repositories.
+- LIVE Link - https://stupendous-gumption-6a837f.netlify.app/
 - Modern Browser: Use browsers like Chrome, Firefox, or Edge to run the HTML5 Canvas environment.
